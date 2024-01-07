@@ -20,6 +20,7 @@
 
   environment.systemPackages = with pkgs; [
     clang
+    cmake
     coreutils
     emacs
     fd

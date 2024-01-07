@@ -1,1 +1,1 @@
-sudo nixos-rebuild switch --flake .#alexander
+sudo nixos-rebuild switch --flake .#victus

@@ -18,8 +18,19 @@
       url = "github:nix-community/nixvim/nixos-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      flake = false;
+    };
+
+    doom-emacs = {
+      url = "github:nix-community/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.emacs-overlay.follows = "emacs-overlay";
+    };
   };
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, doom-emacs, ... }:
     let
       vars = {
         user = "alexander";
@@ -30,7 +41,7 @@
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager nur nixvim vars;
+          inherit inputs nixpkgs nixpkgs-unstable home-manager nur nixvim doom-emacs vars;
         }
       );
 

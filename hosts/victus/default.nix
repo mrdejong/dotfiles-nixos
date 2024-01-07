@@ -3,7 +3,8 @@
 {
   imports = [
     ./hardware-configuration.nix
-  ];
+  ] ++
+  ( import ../../modules/desktops/virtualisation );
 
   boot = {
     loader.systemd-boot.enable = true;
