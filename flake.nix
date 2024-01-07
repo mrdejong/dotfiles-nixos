@@ -30,7 +30,7 @@
       inputs.emacs-overlay.follows = "emacs-overlay";
     };
   };
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, doom-emacs, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, emacs-overlay, ... }:
     let
       vars = {
         user = "alexander";
@@ -41,7 +41,7 @@
       nixosConfigurations = (
         import ./hosts {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager nur nixvim doom-emacs vars;
+          inherit inputs nixpkgs nixpkgs-unstable home-manager nur nixvim emacs-overlay vars;
         }
       );
 

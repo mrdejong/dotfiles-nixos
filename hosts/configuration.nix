@@ -46,6 +46,7 @@ in
     jetbrains-mono
     font-awesome
     corefonts
+    fira
     (nerdfonts.override {
       fonts = [
         "FiraCode"

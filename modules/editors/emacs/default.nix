@@ -20,11 +20,18 @@
 
   environment.systemPackages = with pkgs; [
     clang
+    gnumake
     cmake
     coreutils
     emacs
     fd
     git
     ripgrep
+    rnix-lsp
+    libvterm
+    libtool
+    (emacsWithPackages (epkgs: [
+      epkgs.vterm
+    ]))
   ];
 }

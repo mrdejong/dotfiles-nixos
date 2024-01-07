@@ -1,4 +1,4 @@
-{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, vars, ...
+{ lib, inputs, nixpkgs, nixpkgs-unstable, home-manager, nur, nixvim, emacs-overlay, vars, ...
 }:
 
 let
@@ -20,7 +20,7 @@ in
   victus = lib.nixosSystem {
     inherit system;
     specialArgs = {
-      inherit inputs system unstable vars;
+      inherit inputs system unstable emacs-overlay vars;
       host = {
         hostName = "victus";
         mainMonitor = "DP-1";

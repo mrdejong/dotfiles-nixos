@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
-;; (setq user-full-name "John Doe"
-;;       user-mail-address "john@doe.com")
+(setq user-full-name "Alexander de Jong"
+      user-mail-address "alexander@dutchcaffeine.nl")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
@@ -21,8 +21,8 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+(setq doom-font (font-spec :family "FiraCode Nerd Font Mono" :size 17 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 17))
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -36,11 +36,11 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+(setq org-directory "~/.org/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -74,3 +74,58 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(blink-cursor-mode 1)
+(setq-default initial-major-mode 'org-mode)
+(map! "<escape>" #'keyboard-escape-quit)
+
+(custom-set-faces
+ '(org-level-1 ((t (:inherit outline-1 :height 1.20))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.15))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.12))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.08))))
+ '(org-level-5 ((t (:inherit outline-5 :height 1.05))))
+ '(org-document-title ((t (:height 2.5))))
+ )
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(defun mb/set-org-vars ()
+  (setq org-ellipsis " ▼"
+        org-hide-emphasis-markers nil
+        org-src-fontify-natively t
+        org-fontify-quote-and-verse-blocks t
+        org-src-tab-acts-natively t
+        org-edit-src-content-indentation 0
+        org-src-preserve-indentation t
+        org-hide-block-startup nil
+        org-startup-folded 'showeverything
+        org-startup-with-inline-images t
+        org-cycle-separator-lines 2))
+(add-hook 'org-mode-hook 'mb/set-org-vars)
+
+(defun dc/org-mode-visual-fill ()
+  (setq visual-fill-column-width 110
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+(add-hook 'org-mode-hook 'dc/org-mode-visual-fill)
+
+(defun dc/load-prettify-symbols ()
+  (interactive)
+  (setq prettify-symbols-alist
+        (mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
+                '(("(lamda" . ?λ)
+                  ("|>" . ?▷)
+                  ("<|" . ?◁)
+                  ("->>" . ?↠)
+                  ("->" . ?→)
+                  ("<-" . ?←)
+                  ("=>" . ?⇒)
+                  ("<=" . ?≤)
+                  (">=" . ?≥))))
+        (prettify-symbols-mode 1))
+(add-hook 'org-mode-hook 'dc/load-prettify-symbols)
+
+(add-hook 'org-mode-hook #'org-babel-do-load-languages)
+(setq org-confirm-babel-evaluate nil)
