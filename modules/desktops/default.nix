@@ -1,0 +1,4 @@
+[
+  ./gnome.nix
+  ./options.nix
+]
